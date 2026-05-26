@@ -20,9 +20,7 @@ type Chain struct {
 // memorizing the given list of middleware constructors.
 // New serves no other function,
 // constructors are only called upon a call to Then().
-func New(constructors ...Constructor) Chain {
-	return Chain{append(([]Constructor)(nil), constructors...)}
-}
+func New(constructors ...Constructor) Chain { _ = "STUB: not implemented"; return *new(Chain) }
 
 // Then chains the middleware and returns the final http.Handler.
 //
@@ -49,15 +47,8 @@ func New(constructors ...Constructor) Chain {
 //
 // Then() treats nil as http.DefaultServeMux.
 func (c Chain) Then(h http.Handler) http.Handler {
-	if h == nil {
-		h = http.DefaultServeMux
-	}
-
-	for i := range c.constructors {
-		h = c.constructors[len(c.constructors)-1-i](h)
-	}
-
-	return h
+	_ = "STUB: not implemented"
+	return *new(http.Handler)
 }
 
 // ThenFunc works identically to Then, but takes
@@ -70,12 +61,10 @@ func (c Chain) Then(h http.Handler) http.Handler {
 //
 // ThenFunc provides all the guarantees of Then.
 func (c Chain) ThenFunc(fn http.HandlerFunc) http.Handler {
+	_ = "STUB: not implemented"
 	// This nil check cannot be removed due to the "nil is not nil" common mistake in Go.
 	// Required due to: https://stackoverflow.com/questions/33426977/how-to-golang-check-a-variable-is-nil
-	if fn == nil {
-		return c.Then(nil)
-	}
-	return c.Then(fn)
+	return *new(http.Handler)
 }
 
 // Append extends a chain, adding the specified constructors
@@ -88,11 +77,8 @@ func (c Chain) ThenFunc(fn http.HandlerFunc) http.Handler {
 //	// requests in stdChain go m1 -> m2
 //	// requests in extChain go m1 -> m2 -> m3 -> m4
 func (c Chain) Append(constructors ...Constructor) Chain {
-	newCons := make([]Constructor, 0, len(c.constructors)+len(constructors))
-	newCons = append(newCons, c.constructors...)
-	newCons = append(newCons, constructors...)
-
-	return Chain{newCons}
+	_ = "STUB: not implemented"
+	return *new(Chain)
 }
 
 // Extend extends a chain by adding the specified chain
@@ -117,6 +103,4 @@ func (c Chain) Append(constructors ...Constructor) Chain {
 //	}).Extend(aHtmlAfterNosurf)
 //	// requests to aHtml hitting nosurfs success handler go m1 -> nosurf -> m2 -> target-handler
 //	// requests to aHtml hitting nosurfs failure handler go m1 -> nosurf -> m2 -> csrfFail
-func (c Chain) Extend(chain Chain) Chain {
-	return c.Append(chain.constructors...)
-}
+func (c Chain) Extend(chain Chain) Chain { _ = "STUB: not implemented"; return *new(Chain) }
